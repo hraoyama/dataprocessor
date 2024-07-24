@@ -6,12 +6,12 @@ _dataprocessor_ extends the piping abilities for a pandas `DataFrame` when the i
 Operations on the dataframe are chained using `()` and/or `[]` operators, each with a different meaning. Arguments to `()` will operate on the entire data frame, arguments to `[]` will seek to summarize the data by distinct, non-overlapping blocks of time[^2]. 
 
 The argument to the `()` operator can be either:
-A. A function taking the data frame as its argument and returning a new data frame[^3]
+* A function taking the data frame as its argument and returning a new data frame[^3]
    The function can be any function including:
     - lambdas
     - user defined functions 
     - member functions[^4]
-B. An instance of a class derived from `FilterInterface` which implements an `apply` function returning a subset on the index of the data frame[^5]
+* An instance of a class derived from `FilterInterface` which implements an `apply` function returning a subset on the index of the data frame[^5]
 
 In the case of the latter, the library provides a `TimeFreqFilter` with necessary implementation details[^6] as a convenience. 
 For the former, the nature of the functions is usually to extract, filter, summarize, transform, etc. but any functionality is allowed provided the function returns a pandas `DataFrame`[^7].
