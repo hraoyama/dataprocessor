@@ -3,6 +3,7 @@
 ## Introduction
 
 _dataprocessor_ extends the piping abilities for a pandas `DataFrame` when the index is a `DateTimeIndex`[^1] by wrapping it in a `DataProcessor` class. In order to retrieve the piping result, we access the `data` member on the `DataProcessor` instance. 
+
 Operations on the dataframe are chained using `()` and/or `[]` operators, each with a different meaning. Arguments to `()` will operate on the entire data frame, arguments to `[]` will seek to summarize the data by distinct, non-overlapping blocks of time[^2]. 
 
 The argument to the `()` operator can be either:
