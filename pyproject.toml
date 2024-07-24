@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataprocessor"
+version = "0.0.1"
+authors = [
+  { name="hraoyama", email="hraoyama@gmail.com" },
+]
+description = "DataProcessor extends the piping abilities for pandas DataFrame with a DateTimeIndex by wrapping it in a DataProcessor class"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [ "faker>=20.0"]
+
+[project.urls]
+Homepage = "https://github.com/hraoyama/dataprocessor"
+Issues = "https://github.com/hraoyama/dataprocessor/issues"
