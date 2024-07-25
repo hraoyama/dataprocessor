@@ -63,7 +63,6 @@ Assume we have a rolling mean function, but now we wish to apply a 5-period roll
 def rolling_mean(x, col_name, n):
     return pd.DataFrame(x[col_name].shift(1).rolling(window=n).mean(), index=x.index)
 z = DataProcessor(data)(TimeFreqFilter(TimePeriod.MINUTE, 15))(rolling_mean, col_name="Return", n=5).data
-# pp(z.Return['2020-03-13 19:55:49.743080':'2020-03-15 13:00:00.866140'])
 ```
 Get the observations between 8:30 AM and 4:30 PM at every hour and rename a column 
 ```python
