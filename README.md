@@ -58,11 +58,10 @@ data = pd.DataFrame(np.random.randn(num_obs*2).reshape(num_obs,2), columns=["Ret
 data.Px = np.abs(data.Px)+10.0
 ```
 
-Assume we have a rolling mean function, but now we wish to apply it to the last observations of a column right before 15 minute intervals:   
+Assume we have a rolling mean function, but now we wish to apply a 5-period rolling mean to the last observation right before every 15 minute interval:   
 ```python
 def rolling_mean(x, col_name, n):
     return pd.DataFrame(x[col_name].shift(1).rolling(window=n).mean(), index=x.index)
-
 z = DataProcessor(data)(TimeFreqFilter(TimePeriod.MINUTE, 15))(rolling_mean, col_name="Return", n=5).data
 # pp(z.Return['2020-03-13 19:55:49.743080':'2020-03-15 13:00:00.866140'])
 ```
@@ -76,20 +75,23 @@ On all business days get the difference in price from 15:59 to 16:30.
 z3 = DataProcessor(data)("between_time", '15:59', '16:30')(TimeFreqFilter(TimePeriod.BUSINESS_DAY))(
     lambda x: x.iloc[-1,x.columns.get_loc("Px")]-x.iloc[0,x.columns.get_loc("Px")])
 ```
-As an illustration, here are some methods of filtering between two times: 
+As an illustration, here are some methods for filtering between two times: 
 ```python
-z2 = DataProcessor(data). \
-    between_time('08:30', '16:30'). \
-    ("between_time", '09:15', '15:30'). \
+z2 = DataProcessor(data). 
+    between_time('08:30', '16:30'). 
+    ("between_time", '09:15', '15:30').
     (partial(lambda x, y, z: z.loc[x:y], '2020-03-13 08:00', '2020-03-17 08:00')).data
 ```
 Next, starting at 8:15 AM on 15 Mar 2020, we take summary data for 5 minute intervals consisting of first, max, min, last, median, mean and standard deviation of the Return column. We then rename the columns and keep the intervals with observations.
 ```python
-z2 = DataProcessor(data) \
-    [TimeFreqFilter(TimePeriod.MINUTE, 5, starting=datetime(2020, 3, 15, 8, 15, 0)),
-     [DataProcessor.first, np.max, np.min, DataProcessor.last, np.median, np.mean, np.std], "Return"] \
-    (lambda x: x.rename(columns={'amax': 'HIGH', 'amin': 'LOW', 'mean': 'MEAN',
-                                 'median': 'MEDIAN', 'first': 'OPEN', 'last': 'CLOSE', 'std': 'STD'}))(lambda x: x[~np.isnan(x.MEAN)]).data
+z2 = DataProcessor(data)[
+        TimeFreqFilter(TimePeriod.MINUTE, 5, starting=datetime(2020, 3, 15, 8, 15, 0)),
+        [DataProcessor.first, np.max, np.min, DataProcessor.last, np.median, np.mean, np.std], 
+        "Return"](
+    lambda x: x.rename(columns={'amax': 'HIGH', 'amin': 'LOW', 'mean': 'MEAN',
+                                 'median': 'MEDIAN', 'first': 'OPEN', 
+                                'last': 'CLOSE', 'std': 'STD'}))(
+    lambda x: x[~np.isnan(x.MEAN)]).data
 ```
 
 [^1]: Even though the library focuses on a DateTimeIndex, there is nothing stopping users from using the functionality on pandas DataFrames with different indices; including providing their own classes as filters provided they implement an `apply` method.

@@ -5,7 +5,7 @@ from abc import ABC
 from enum import Enum
 from typing import Union, List
 
-from constants import TimePeriod
+from dataprocessor.constants import TimePeriod
 
 
 class FilterType(Enum):

@@ -1,5 +1,5 @@
-from utils import apply_func, summarize
-from feed_filter import TimeFreqFilter, FilterInterface
+from dataprocessor.utils import apply_func, summarize
+from dataprocessor.feed_filter import TimeFreqFilter, FilterInterface
 from functools import partial
 
 import pandas as pd
