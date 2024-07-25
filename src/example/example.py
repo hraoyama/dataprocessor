@@ -25,7 +25,7 @@ def main():
                                     'median': 'MEDIAN', 'first': 'OPEN',
                                     'last': 'CLOSE', 'std': 'STD'}))(
         lambda x: x[~np.isnan(x.MEAN)]).data
-    z2.describe()
+    print(z2.describe())
     pass
 
 if __name__ == "__main__":

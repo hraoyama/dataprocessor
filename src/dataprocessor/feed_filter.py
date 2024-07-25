@@ -80,7 +80,7 @@ class TimeFreqFilter(FreqFilter):
         
         used_starting = self.starting if self.starting is not None else dfi[0]
         used_range = pd.date_range(used_starting,
-                                   dfi[-1].to_pydatetime(),
+                                   dfi.max().to_pydatetime(),
                                    freq=f'{self.length}{self.period.value}')
         
         return_fixed_range = self.return_fixed_indices

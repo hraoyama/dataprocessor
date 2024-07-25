@@ -70,11 +70,11 @@ class DataProcessor(object):
     
     @staticmethod
     def first(x):
-        return x[0]
+        return x.iloc[0]
     
     @staticmethod
     def last(x):
-        return x[-1]
+        return x.iloc[-1]
     
     # this group of functions are nothing more than convenience functions!!
     # I know, breaks the single interface principle...
